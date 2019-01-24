@@ -13,7 +13,7 @@ Written by component_cookiecutter
 import logging
 import os
 
-from component import Component
+from pyesm.component import Component
 
 
 class Echam6(Component):
