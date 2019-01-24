@@ -14,8 +14,15 @@ class Echam6Compute(Echam6, ComponentCompute):
 
     def _compute_requirements(self):
         """ Compute requirements for echam6 """
-        self.executeable = None
+        self.executeable = "echam6"
         self.command = None
-        self.num_tasks = None
-        self.num_threads = None
-
+        # Number of nodes is depndent on the cores per compute node. Here, we
+        # use a dictionary of dictionaries. The dictionary of the **outer**
+        # dictionary is the resolution, the dictionary key of the **inter**
+        # dictionary is the number of nodes needed. The hostname decides how
+        # many cores per compute node exit.
+        self.__nnodes = {"T63": {36: 12, 24: 18}}[self.LateralResolution]
+        self.__nproca = {"T63": {36: 24, 24: 24}}[self.LateralResolution]
+        self.__nprocb = {"T63": {36: 18, 24: 18}}[self.LateralResolution]
+        self.__num_tasks = None
+        self.__num_threads = None
