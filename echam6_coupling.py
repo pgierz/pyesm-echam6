@@ -41,7 +41,6 @@ class Echam6Couple_Ice(Echam6Compute):
 
         self.__cleanup_list = []
         self._cdo_stderr = open(self.couple_dir+"/EchamCouple_Ice_cdo_log", "w")
-        self._nco_stderr = open(self.couple_dir+"/EchamCouple_Ice_nco_log", "w")
         self.CDO = cdo.Cdo(logging=True, logFile=self._cdo_stderr)
 
         # Get relevant environmental variables
@@ -101,6 +100,27 @@ class Echam6Couple_Ice(Echam6Compute):
         pass
 
     def _construct_input_list(self, start_year, end_year):
+        """
+        Generates an input list for the files needed for coupling
+
+        Parameters
+        ----------
+        start_year: int
+            which **year** to start at. Note that months will be added automatically
+        end_year: int
+            which **year** to end at.
+
+        Returns
+        -------
+        file_list : list
+            a list of the files which have been selected for use in coupling
+
+        .. NOTE:: 
+            This method is **very dependent** on how the actual files are
+            named, which in turn depends on two things:
+            1. What the ``echam6`` namelist is set to
+            2. How the pyesm functions rearrange the output.
+        """
         logging.info("\t\t *   constructing input list...")
         # FIXME: This depends on how the model is configured to output data.
         # This **SHOULD** be defined somehow in one of the namelists...
@@ -112,6 +132,34 @@ class Echam6Couple_Ice(Echam6Compute):
         return file_list
 
     def _select_relevant_variables(self, file_list):
+        """
+        Selects relevant variables from a list of files
+
+        Currently, the following variables are extracted:
+
+        + The orography ``orog``, which is derived from the geopotential height
+          divided by the acceleration due to gravity.
+        + The total precipitation ``aprt``, which is derived from the sum of
+          large-scale and convective precipitation
+        + Near surface temperature ``temp2``
+        + Shortwave radiation at the bottom of the atmosphere
+          ``bottom_sw_down``, derived as ``srads`` minus ``sradsu``.
+
+        Parameters
+        ----------
+        file_list: list
+            The list of files where relevant variables will be selected from
+
+        Returns
+        -------
+        files_with_selected_variables: list
+            A list of files containing the reduced information
+
+        Raises
+        ------
+        CouplingError
+            Raised if the returned list would have a length of 0.
+        """
         logging.info("\t\t *   selecting relevant variables...")
         files_with_selected_variables = []
         with tempfile.NamedTemporaryFile() as instruction_file:
@@ -141,7 +189,10 @@ class Echam6Couple_Ice(Echam6Compute):
                     logging.warn("\t\t *   WARNING: Not all variables needed were present, skipping %s", this_file)
                     logging.debug("These were needed: ", required_vars)
                     logging.debug("These were available: ", vars_in_this_file)
-        return files_with_selected_variables
+        if len(files_with_selected_variables) is not 0:
+            return files_with_selected_variables
+        else:
+            raise CouplingError("The filelist you supplied did not contain any information to generate generic ice sheet forcing!")
 
     def _concatenate_files(self, file_list):
         logging.info("\t\t *   concatenating files...")
