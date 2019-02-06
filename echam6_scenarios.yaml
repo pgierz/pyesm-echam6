@@ -1,0 +1,67 @@
+#YAML configuration files for echam scenarios
+#depends on echam_@dataset@.yaml
+
+scenario:
+        - HIST:
+                - always:
+                        - input:
+                                - rrtmg_lw: *allrrtmg_lw
+                                - rrtmg_sw: *allrrtmg_sw
+                                - cldoptprops: *allprops
+                                - TSLCLIM: *allTSLCLIM
+                                - jan_spec: *alljanspec
+                        - forcing:
+                                - ozone: *HISTO3
+                                - aero_fin: *HISTAEROFIN
+                                - aero_coarse: *HISTAEROCOARSE
+                                - aero_farir: *HISTAEROFARIR    
+                                - greenhouse_gases: *HISTGREENH
+                                - volcanic_sw: *HISTVOLCSW    
+                                - volcanic_ir: *HISTVOLCIR 
+                                - swflux: *HISTSWFLUX
+                                - macsp: *HISTMACSP  
+                - standalone:
+                        - input:
+                                - VGRATCLIM: *mpiomvgrat
+                                - VLTCLIM: *mpiomvlt
+                                - JANSURF: *mpiomjansurf 
+                         - forcing:
+                                - sst: *AMIPSST
+                                - sic: *AMIPSIC
+                - mpiesm:
+                        - input:
+                                - VGRATCLIM: *mpiomvgrat
+                                - VLTCLIM: *mpiomvlt
+                                - JANSURF: *mpiomjansurf 
+                                        
+        - PI-CTRL:
+                -always:
+                        - input:
+                                - rrtmg_lw: *allrrtmg_lw
+                                - rrtmg_sw: *allrrtmg_sw
+                                - cldoptprops: *allprops
+                                - TSLCLIM: *allTSLCLIM
+                                - jan_spec: *alljanspec
+                        - forcing:
+                                - ozone: *PIO3
+                                - aero_fin: *PIAEROFIN
+                                - aero_coarse: *PIAEROCOARSE
+                                - aero_farir: *PIAEROFARIR        
+                - standalone:
+                        - input:
+                                - VGRATCLIM: *mpiomvgrat
+                                - VLTCLIM: *mpiomvlt
+                                - JANSURF: *mpiomjansurf 
+                         - forcing:
+                                - sst: *PISST
+                                - sic: *PISIC
+                - mpiesm:
+                        - input:
+                                - VGRATCLIM: *mpiomvgrat
+                                - VLTCLIM: *mpiomvlt
+                                - JANSURF: *mpiomjansurf 
+
+
+
+
+

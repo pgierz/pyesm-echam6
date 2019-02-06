@@ -1,0 +1,28 @@
+# YAML configuration file for echam6
+#
+
+configuration:
+        executable: echam6
+        command: configuration.executable
+        resolution:
+               - name: T63
+                 ocean_resolution: GR15
+                 nx: 192
+                 ny: 96
+                 time_step: 450
+        levels: L47
+        dataset: r0007
+        scenario: HIST 
+
+restart:
+        restarted: 0
+        restart_frequency: 1
+        restart_unit: months
+        restart_firstlast: last
+
+executable:
+        files:
+                dest: configuration.executable
+                src: @bindir@/configuration.executable
+
+

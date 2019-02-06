@@ -1,0 +1,129 @@
+# YAML for echam dataset r0007
+
+
+
+sst:
+  dest: unit.20
+  amip: &AMIPSST
+     src:
+           - ' @YR@ <= 1870': @INPUTDIR@/@RES@/@RES@_amipsst_1870.nc
+           - ' 1870 < @YR@ < 2016': @RES@_amipsst_@YR@.nc
+           - ' 2016 <= @YR@': @RES@_amipsst_2016.nc
+  pictrl: &PISST
+     src:
+        @INPUT_DIR@/@RES@/@RES@@OCERES@_piControl-LR_sst_1880-2379.nc 
+
+sic:
+  dest: unit.96
+  amip: &AMIPSIC
+     src: 
+           - ' @YR@ <= 1870': @INPUTDIR@/@RES@/@RES@_amipsic_1870.nc
+           - ' 1870 < @YR@ < 2016': @RES@_amipsic_@YR@.nc
+           - ' 2016 <= @YR@': @RES@_amipsic_2016.nc
+  pictrl: &PISIC
+     src:
+        @INPUT_DIR@/@RES@/@RES@@OCERES@_piControl-LR_sic_1880-2379.nc 
+
+ozone:
+  dest: ozon@YR@.nc
+  historical: &HISTO3
+     src:
+          - ' @YR@ <= 1850': @INPUT_DIR@/@RES@/ozone/@RES@_ozone_historical_1850.nc
+          - ' 1850 <= YR <= 2014': @INPUT_DIR@/@RES@/ozone/@RES@_ozone_historical_@YR@.nc
+  pictrl: &PIO3
+     src:
+        @INPUT_DIR@/@RES@/ozone/@RES@_ozone_picontrol.nc
+
+
+aero_fin:
+   dest: aero_fine_@YR@.nc
+   pictrl: &PIAEROFIN
+      src:
+         @INPUT_DIR@/@RES@/aero/@RES@_aeropt_kinne_sw_b14_fin_1865.nc
+   historical: &HISTAEROFIN
+      src:
+         @INPUT_DIR@/@RES@/aero/@RES@_aeropt_kinne_sw_b14_fin_1865.nc
+         
+aero_coarse:
+   dest: aero_coarse_@YR@.nc
+   pictrl: &PIAEROCOARSE
+      src:
+         @INPUT_DIR@/@RES@/aero/@RES@_aeropt_kinne_sw_b14_coa.nc
+   historical: &HISTAEROCOARSE
+      src:
+         @INPUT_DIR@/@RES@/aero/@RES@_aeropt_kinne_sw_b14_coa.nc
+  
+aero_farir:
+   dest: aero_farir_@YR@.nc
+   pictrl: &PIAEROFARIR
+      src: @INPUT_DIR@/@RES@/aero/@RES@_aeropt_kinne_lw_b16_coa.nc
+   historical: &HISTAEROFARIR
+      src: @INPUT_DIR@/@RES@/aero/@RES@_aeropt_kinne_lw_b16_coa.nc
+
+greenhouse_gases:
+   dest: greenhouse_gases.nc
+   historical: &HISTGREENH
+      src: @INPUT_DIR@/@RES@/greenhouse_gases.nc
+
+volcanic_sw:
+   dest: strat_aerosol_sw_@YR@.nc
+   historical: &HISTVOLCSW
+     src:
+       - ' @YR@ <= 1850': @INPUT_DIR@/@RES@/volcano_aerosols/strat_aerosol_sw_@RES@_1850.nc
+      
+      - ' 1850 <= YR <= 2014': @INPUT_DIR@/@RES@/volcano_aerosols/strat_aerosol_sw_@RES@_@YR@.nc
+
+volcanic_ir:
+   dest: strat_aerosol_ir_@YR@.nc
+   historical: &HISTVOLCIR
+     src:
+       - ' @YR@ <= 1850': @INPUT_DIR@/@RES@/volcano_aerosols/strat_aerosol_ir_@RES@_1850.nc
+      
+      - ' 1850 <= YR <= 2014': @INPUT_DIR@/@RES@/volcano_aerosols/strat_aerosol_ir_@RES@_@YR@.nc
+
+swflux:
+   dest: swflux_@YR@.nc
+   historical: &HISTSWFLUX
+     src:
+       - ' @YR@ <= 1850': @INPUT_DIR@/@RES@/solar_irradiance/swflux_14band_1850.nc
+      
+      - ' 1850 <= YR <= 2014': @INPUT_DIR@/@RES@/solar_irradiance/swflux_14band_@YR@.nc
+
+macsp:
+   dest: MAC-SP.nc
+   historical: &HISTMACSP
+      src:
+         @INPUT_DIR@/@RES@/MAC-SP.nc
+
+rrtmg_lw: &allrrtmg_lw
+   dest: rrtmg_lw.nc
+   src: @INPUT_DIR@/rrtmg_lw.nc 
+
+rrtmg_sw: &allrrtmg_sw
+   dest: rrtmg_sw.nc
+   src: @INPUT_DIR@/rrtmg_sw.nc 
+
+cldoptprops: &allprops
+   dest: ECHAM6_CldOptProps.nc
+   src: @INPUT_DIR@/ECHAM6_CldOptProps.nc
+
+TSLCLIM: &allTSLCLIM
+   dest: unit.92
+   src: @INPUT_DIR@/@RES@_TSLCLIM.nc
+
+jan_spec: &mpiomjanspec
+   dest: unit.23
+   src: @INPUT_DIR@/@RES@@LEVELS@_jan_spec.nc
+
+VGRATCLIM: &mpiomvgrat
+   dest: unit.91
+   src: @INPUT_DIR@/@RES@/@RES@@OCERES@_VGRATCLIM.nc
+
+VLTCLIM: &mpiomvlt
+   dest: unit.90
+   src: @INPUT_DIR@/@RES@/@RES@@OCERES@_VLTCLIM.nc
+
+JANSURF: &mpiomjansurf
+   dest: unit.24
+   src: @INPUT_DIR@/@RES@/@RES@@OCERES@_jan_surf.nc
+
