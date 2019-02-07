@@ -12,6 +12,10 @@ from pyesm.echam6 import Echam6
 class Echam6Compute(Echam6, ComponentCompute):
     """ A docstring. Please fill this out at least a little bit """
 
+    def __init__(self, is_coupled=True, *args, **kwargs):
+        super(Echam6Compute, self).__init__(*args, **kwargs)
+        self.is_coupled = is_coupled
+
     def _compute_requirements(self):
         """ Compute requirements for echam6 """
         self.executeable = "echam6"
