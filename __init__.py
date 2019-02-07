@@ -23,6 +23,10 @@ class Echam6(Component):
     VERSION = "6.3.04p1"
     TYPE = "atmosphere"
 
+    def __init__(self, oceanres=None, *args):
+        super().__init__(*args)
+        self.oceanres=oceanres
+
     def _resolution(self, res_key=None):
         """
         Defines the resolution and generates the following attributes
