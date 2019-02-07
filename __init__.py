@@ -27,46 +27,36 @@ class Echam6(Component):
         """
         Defines the resolution and generates the following attributes
         """
-        Resolutions = {None:
-                        {
-                            "LateralResolution": None,
-                            "VerticalResolution": None,
-                            "Timestep": None,
-                            "_nx": None,
-                            "_ny": None,
-                            "_nz": None,
-                            "_ngridpoints": None,
-                        },
-
+        Resolutions = {
                     "T31":
                         {
-                            "LateralResolution": "T31",
-                            "VerticalResolution": "L19",
+                            "res": "T31",
+                            "levels": "L19",
                             "Timestep": 450,
                             "_nx": 96,
                             "_ny": 48,
-                            "_ngridpoints": 96*48
+                            "_ngridpoints": 96*48,
                             },
 
                     "T63":
                         {
-                            "LateralResolution": "T63",
-                            "VerticalResolution": "L47",
+                            "res": "T63",
+                            "levels": "L47",
                             "Timestep": 450,
                             "_nx": 192,
                             "_ny": 96,
-                            "_ngridpoints": 192*96 
+                            "_ngridpoints": 192*96,
                             },
 
                     "T127":
                         {
-                            "LateralResolution": "T127",
-                            "VerticalResolution": "L47",
+                            "res": "T127",
+                            "levels": "L47",
                             "Timestep": 200,
                             "_nx": 384,
                             "_ny": 192,
-                            "_ngridpoints": 384*192 
-                            }
+                            "_ngridpoints": 384*192,
+                            },
                       }
         for key, value in Resolutions[res_key].items():
             setattr(self, key, value)
